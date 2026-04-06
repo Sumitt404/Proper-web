@@ -49,7 +49,11 @@ h1, h2, h3, h4, h5, h6, .hero-title, .section-title {
 
 /* ─── CUSTOM CURSOR (DESKTOP ONLY) ─────────────────── */
 @media (hover: hover) and (pointer: fine) {
-  body { cursor: none; }
+  /* Override default pointer hands on all interactive elements */
+  body, a, button, .mobile-nav-close, .nav-hamburger { 
+    cursor: none !important; 
+  }
+  
   #cursor {
     position: fixed; top: 0; left: 0; z-index: 9999;
     width: 10px; height: 10px;
@@ -70,10 +74,17 @@ h1, h2, h3, h4, h5, h6, .hero-title, .section-title {
     transition: transform .15s var(--ease-out), width .3s var(--ease-out), height .3s var(--ease-out), opacity .3s;
     opacity: .6;
   }
+  
+  /* Trigger hover effects on links, buttons */
   body:has(a:hover) #cursor,
-  body:has(button:hover) #cursor { width: 6px; height: 6px; background: var(--ink); }
+  body:has(button:hover) #cursor { 
+    width: 6px; height: 6px; background: var(--ink); 
+  }
+  
   body:has(a:hover) #cursor-ring,
-  body:has(button:hover) #cursor-ring { width: 50px; height: 50px; opacity: 1; }
+  body:has(button:hover) #cursor-ring { 
+    width: 50px; height: 50px; opacity: 1; 
+  }
 }
 @media (hover: none), (pointer: coarse) {
   #cursor, #cursor-ring { display: none !important; }
@@ -131,6 +142,18 @@ nav.scrolled {
   backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(184,151,90,.15);
 }
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  text-decoration: none;
+}
+.nav-logo-img {
+  height: 38px;
+  width: 38px;
+  object-fit: contain;
+  border-radius: 3px;
+}
 .nav-logo {
   font-family: var(--ff-disp);
   font-size: 1.3rem;
@@ -175,7 +198,7 @@ nav.scrolled .nav-cta { color: var(--gold); border-color: var(--gold); }
 /* hamburger */
 .nav-hamburger {
   display: none; flex-direction: column; gap: 5px;
-  cursor: pointer; background: none; border: none; padding: 4px;
+  background: none; border: none; padding: 4px;
 }
 .nav-hamburger span {
   display: block; width: 26px; height: 1px;
@@ -253,8 +276,8 @@ nav.scrolled .nav-hamburger span { background: var(--ink); }
 }
 .hero-title {
   font-family: var(--ff-disp);
-  font-size: clamp(2.2rem, 8vw, 6.5rem);
-  line-height: 1.0;
+  font-size: clamp(1.8rem, 5vw, 4.2rem); 
+  line-height: 1.1;
   color: var(--ivory);
   font-weight: 300;
   margin-bottom: 2rem;
@@ -401,7 +424,7 @@ section { padding: 9rem 4rem; }
 
 @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-/* ─── ABOUT ────────────────────────────────────────── */
+/* ─── PRINCIPAL ARCHITECT (FORMERLY ABOUT) ─────────────── */
 #about {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -415,38 +438,12 @@ section { padding: 9rem 4rem; }
 .about-img-main {
   width: 100%; aspect-ratio: 3/4;
   object-fit: cover;
-  background: url('https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=800&q=80') center/cover;
-}
-.about-img-accent {
-  position: absolute;
-  bottom: -3rem; right: -3rem;
-  width: 55%; aspect-ratio: 1;
-  background: url('https://images.unsplash.com/photo-1545579133-99bb5ad189be?w=600&q=80') center/cover;
-  border: 6px solid var(--white);
-}
-.about-stat-tag {
-  position: absolute;
-  top: 2.5rem; left: -2rem;
-  background: var(--ink);
-  padding: 1.2rem 1.6rem;
-  color: var(--ivory);
-}
-.about-stat-tag .num {
-  font-family: var(--ff-disp);
-  font-size: 2.2rem;
-  font-weight: 300;
-  color: var(--gold);
-  line-height: 1;
-}
-.about-stat-tag .lbl {
-  font-family: var(--ff-mono);
-  font-size: .55rem;
-  letter-spacing: .2em;
-  color: var(--ash);
-  text-transform: uppercase;
-  margin-top: .3rem;
+  background: url('https://images.unsplash.com/photo-1556157382-97eda2d62296?w=800&q=80') center/cover;
 }
 .about-text { padding-right: 2rem; }
+.about-text .section-title {
+  font-size: clamp(1.8rem, 5vw, 3.4rem); 
+}
 .about-lead {
   font-family: var(--ff-disp);
   font-size: 1.35rem;
@@ -461,162 +458,13 @@ section { padding: 9rem 4rem; }
   color: var(--ash);
   margin-bottom: 1.2rem;
 }
-.about-values {
-  margin-top: 2.5rem;
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
-}
-.value-item .v-title {
-  font-size: .7rem;
-  letter-spacing: .15em;
-  text-transform: uppercase;
-  font-weight: 500;
-  color: var(--gold);
-  margin-bottom: .4rem;
-}
-.value-item p {
-  font-size: .78rem;
-  color: var(--ash);
-  line-height: 1.7;
-}
-
-/* ─── STATS BAR ────────────────────────────────────── */
-.stats-bar {
-  background: var(--ink);
-  padding: 5rem 4rem;
-  display: grid;
-  grid-template-columns: repeat(4,1fr);
-  gap: 2rem;
-}
-.stat-item {
-  text-align: center;
-  padding: 2rem;
-  border-right: 1px solid rgba(184,151,90,.15);
-  position: relative;
-}
-.stat-item:last-child { border-right: none; }
-.stat-num {
-  font-family: var(--ff-disp);
-  font-size: clamp(2rem, 5vw, 4rem);
-  font-weight: 300;
-  color: var(--gold);
-  line-height: 1;
-}
-.stat-suffix {
-  font-size: 1.2rem;
-  color: var(--gold-lt);
-  vertical-align: super;
-}
-.stat-label {
-  font-family: var(--ff-mono);
-  font-size: .6rem;
-  letter-spacing: .25em;
-  color: var(--ash);
-  text-transform: uppercase;
-  margin-top: .8rem;
-}
-
-/* ─── PORTFOLIO ────────────────────────────────────── */
-#portfolio { background: var(--ivory); padding: 9rem 4rem; }
-.portfolio-header {
-  display: flex; align-items: flex-end; justify-content: space-between;
-  margin-bottom: 5rem;
-}
-.portfolio-filter {
-  display: flex; gap: 2rem;
-  flex-wrap: wrap; 
-  list-style: none;
-}
-.portfolio-filter li {
-  font-size: .65rem;
-  letter-spacing: .2em;
-  text-transform: uppercase;
-  color: var(--ash);
-  cursor: pointer;
-  padding-bottom: .3rem;
-  border-bottom: 1px solid transparent;
-  transition: color .3s, border-color .3s;
-}
-.portfolio-filter li.active, .portfolio-filter li:hover {
-  color: var(--gold);
-  border-bottom-color: var(--gold);
-}
-.portfolio-grid {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: auto;
-  gap: 1.5rem;
-}
-.proj {
-  position: relative; overflow: hidden;
-  cursor: pointer;
-}
-.proj:nth-child(1) { grid-column: span 7; grid-row: span 2; }
-.proj:nth-child(2) { grid-column: span 5; }
-.proj:nth-child(3) { grid-column: span 5; }
-.proj:nth-child(4) { grid-column: span 4; }
-.proj:nth-child(5) { grid-column: span 4; }
-.proj:nth-child(6) { grid-column: span 4; }
-
-img.proj-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform .8s var(--ease-out);
-}
-.proj:nth-child(1) img.proj-img { aspect-ratio: 7/6; }
-.proj:nth-child(2) img.proj-img,
-.proj:nth-child(3) img.proj-img { aspect-ratio: 5/4; }
-.proj:nth-child(4) img.proj-img,
-.proj:nth-child(5) img.proj-img,
-.proj:nth-child(6) img.proj-img { aspect-ratio: 4/3; }
-
-.proj:hover img.proj-img { transform: scale(1.06); }
-
-.proj-overlay {
-  position: absolute; inset: 0;
-  background: linear-gradient(to top, rgba(13,12,11,.85) 0%, transparent 50%);
-  opacity: 0;
-  transition: opacity .5s;
-  display: flex; flex-direction: column;
-  justify-content: flex-end;
-  padding: 2rem;
-}
-.proj:hover .proj-overlay { opacity: 1; }
-.proj-cat {
-  font-family: var(--ff-mono);
-  font-size: .55rem;
-  letter-spacing: .25em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: .5rem;
-}
-.proj-name {
-  font-family: var(--ff-disp);
-  font-size: 1.5rem;
-  color: var(--ivory);
-  font-weight: 300;
-}
-.proj-location {
-  font-size: .7rem;
-  color: rgba(245,240,232,.5);
-  margin-top: .3rem;
-  letter-spacing: .05em;
-}
-.proj-arrow {
-  position: absolute;
-  top: 1.5rem; right: 1.5rem;
-  width: 40px; height: 40px;
-  background: var(--gold);
-  display: flex; align-items: center; justify-content: center;
-  transform: scale(0) rotate(-45deg);
-  transition: transform .4s var(--ease-out);
-}
-.proj:hover .proj-arrow { transform: scale(1) rotate(0); }
 
 /* ─── SERVICES ─────────────────────────────────────── */
-#services { background: var(--ink); padding: 9rem 4rem; }
+#services { 
+  background: var(--ink); 
+  padding-top: 9rem; 
+  padding-bottom: 2rem; /* Significantly reduced to blend with stats */
+} 
 #services .section-title { color: var(--ivory); }
 #services .section-label { color: var(--gold); }
 .services-intro {
@@ -692,8 +540,90 @@ img.proj-img {
 
 @media (hover: none) {
   .service-link { opacity: 1; transform: translateX(0); }
-  .proj-overlay { opacity: 1; background: linear-gradient(to top, rgba(13,12,11,.9) 0%, transparent 80%); }
-  .proj-arrow { transform: scale(1) rotate(0); }
+}
+
+/* ─── STATS BAR (SEAMLESSLY BELOW SERVICES) ────────── */
+.stats-bar {
+  background: var(--ink);
+  padding: 1rem 4rem 9rem; /* Tightened top gap to blend visually */
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 2rem;
+}
+.stat-item {
+  text-align: center;
+  padding: 2rem;
+  border-right: 1px solid rgba(184,151,90,.15);
+  position: relative;
+}
+.stat-item:last-child { border-right: none; }
+.stat-num {
+  font-family: var(--ff-disp);
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 300;
+  color: var(--gold);
+  line-height: 1;
+}
+.stat-suffix {
+  font-size: 1.2rem;
+  color: var(--gold-lt);
+  vertical-align: super;
+}
+.stat-label {
+  font-family: var(--ff-mono);
+  font-size: .6rem;
+  letter-spacing: .25em;
+  color: var(--ash);
+  text-transform: uppercase;
+  margin-top: .8rem;
+}
+
+/* ─── PROCESS ──────────────────────────────────────── */
+#process { background: var(--ivory); padding: 9rem 4rem; }
+.process-steps {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 0;
+  margin-top: 5rem;
+  position: relative;
+}
+.process-steps::before {
+  content: '';
+  position: absolute;
+  top: 2.2rem; left: 5%; right: 5%;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--sand), var(--sand), transparent);
+}
+.step {
+  text-align: center;
+  padding: 0 2rem;
+  position: relative;
+}
+.step-circle {
+  width: 46px; height: 46px;
+  border: 1px solid var(--sand);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 2rem;
+  background: var(--ivory);
+  font-family: var(--ff-mono);
+  font-size: .6rem;
+  color: var(--gold);
+  letter-spacing: .1em;
+  position: relative; z-index: 1;
+  transition: background .4s, border-color .4s;
+}
+.step:hover .step-circle { background: var(--gold); border-color: var(--gold); color: var(--ink); }
+.step-title {
+  font-family: var(--ff-disp);
+  font-size: 1.3rem;
+  font-weight: 300;
+  margin-bottom: .8rem;
+}
+.step-desc {
+  font-size: .78rem;
+  line-height: 1.8;
+  color: var(--ash);
 }
 
 /* ─── TESTIMONIALS ─────────────────────────────────── */
@@ -773,54 +703,6 @@ img.proj-img {
   font-size: .58rem;
   color: var(--ash);
   letter-spacing: .1em;
-}
-
-/* ─── PROCESS ──────────────────────────────────────── */
-#process { background: var(--ivory); padding: 9rem 4rem; }
-.process-steps {
-  display: grid;
-  grid-template-columns: repeat(4,1fr);
-  gap: 0;
-  margin-top: 5rem;
-  position: relative;
-}
-.process-steps::before {
-  content: '';
-  position: absolute;
-  top: 2.2rem; left: 5%; right: 5%;
-  height: 1px;
-  background: linear-gradient(to right, transparent, var(--sand), var(--sand), transparent);
-}
-.step {
-  text-align: center;
-  padding: 0 2rem;
-  position: relative;
-}
-.step-circle {
-  width: 46px; height: 46px;
-  border: 1px solid var(--sand);
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  margin: 0 auto 2rem;
-  background: var(--ivory);
-  font-family: var(--ff-mono);
-  font-size: .6rem;
-  color: var(--gold);
-  letter-spacing: .1em;
-  position: relative; z-index: 1;
-  transition: background .4s, border-color .4s;
-}
-.step:hover .step-circle { background: var(--gold); border-color: var(--gold); color: var(--ink); }
-.step-title {
-  font-family: var(--ff-disp);
-  font-size: 1.3rem;
-  font-weight: 300;
-  margin-bottom: .8rem;
-}
-.step-desc {
-  font-size: .78rem;
-  line-height: 1.8;
-  color: var(--ash);
 }
 
 /* ─── CONTACT ──────────────────────────────────────── */
@@ -904,7 +786,7 @@ img.proj-img {
   letter-spacing: .2em;
   text-transform: uppercase;
   font-weight: 500;
-  border: none; cursor: pointer;
+  border: none;
   transition: background .3s, transform .3s var(--ease-out);
   align-self: flex-start;
 }
@@ -998,15 +880,12 @@ footer {
   position: absolute; top: 2rem; right: 2rem;
   background: none; border: none;
   color: var(--ivory); font-size: 1.5rem;
-  cursor: pointer;
   padding: 10px;
 }
 
 /* ─── RESPONSIVE ───────────────────────────────────── */
 @media (max-width: 1100px) {
   #about { grid-template-columns: 1fr; gap: 3rem; }
-  .about-img-accent { display: none; }
-  .about-stat-tag { left: 1rem; }
   .about-text { padding-right: 0; }
   .services-grid { grid-template-columns: repeat(2,1fr); }
   .testimonials-inner { grid-template-columns: 1fr; }
@@ -1026,23 +905,16 @@ footer {
   #hero { padding: 0 2rem 4rem; }
   .hero-img-wrap { width: 100%; opacity: .3; }
   .hero-scroll { right: 2rem; bottom: 4rem; }
-  .stats-bar { grid-template-columns: repeat(2,1fr); padding: 3rem 2rem; }
+  
+  #services { padding-bottom: 1.5rem; }
+  .stats-bar { grid-template-columns: repeat(2,1fr); padding: 1.5rem 2rem 6rem; }
   .stat-item { border-right: none; border-bottom: 1px solid rgba(184,151,90,.15); }
   .stat-item:nth-child(odd) { border-right: 1px solid rgba(184,151,90,.15); }
   .stat-item:last-child, .stat-item:nth-child(3) { border-bottom: none; }
-  .portfolio-grid { grid-template-columns: 1fr 1fr; }
-  .proj:nth-child(1),
-  .proj:nth-child(2),
-  .proj:nth-child(3),
-  .proj:nth-child(4),
-  .proj:nth-child(5),
-  .proj:nth-child(6) { grid-column: span 1; grid-row: span 1; }
-  .proj:nth-child(1) { grid-column: span 2; }
-  .portfolio-header { flex-direction: column; align-items: flex-start; gap: 2rem; }
+  
   .contact-grid { grid-template-columns: 1fr; gap: 4rem; }
   .form-row { grid-template-columns: 1fr; }
   .footer-top { grid-template-columns: 1fr 1fr; }
-  .about-values { gap: 2rem; }
 }
 
 @media (max-width: 600px) {
@@ -1056,17 +928,8 @@ footer {
   }
   .btn-primary, .btn-ghost { justify-content: center; width: 100%; }
   
-  .about-stat-tag { 
-    top: 1rem; left: 1rem; 
-    padding: 1rem 1.2rem; 
-  }
-  .about-stat-tag .num { font-size: 1.8rem; }
-  .about-values { grid-template-columns: 1fr; gap: 1.5rem; }
-  
-  .stats-bar { grid-template-columns: 1fr 1fr; padding: 2.5rem 1.5rem; }
-  .portfolio-grid { grid-template-columns: 1fr; }
-  .proj:nth-child(1) { grid-column: span 1; }
-  .portfolio-header { margin-bottom: 3rem; }
+  #services { padding-bottom: 1rem; }
+  .stats-bar { grid-template-columns: 1fr 1fr; padding: 1rem 1.5rem 5rem; }
   
   .services-grid { grid-template-columns: 1fr; }
   .process-steps { grid-template-columns: 1fr; gap: 2.5rem; margin-top: 3rem; }
@@ -1100,7 +963,7 @@ footer {
 <div class="mobile-nav" id="mobileNav">
   <button class="mobile-nav-close" id="navClose">✕</button>
   <a href="#about" onclick="closeMobileNav()">About</a>
-  <a href="#portfolio" onclick="closeMobileNav()">Portfolio</a>
+  <a href="#portfolio" onclick="closeMobileNav()">Projects</a>
   <a href="#services" onclick="closeMobileNav()">Services</a>
   <a href="#testimonials" onclick="closeMobileNav()">Clients</a>
   <a href="#contact" onclick="closeMobileNav()">Contact</a>
@@ -1108,10 +971,13 @@ footer {
 
 <!-- NAVIGATION -->
 <nav id="nav">
-  <a href="#" class="nav-logo">VISHWA ARCHITECTS</a>
+  <a href="#" class="nav-brand">
+    <img src="LOGO.jpg" alt="Vishwa Architects Logo" class="nav-logo-img" onerror="this.style.display='none'" />
+    <span class="nav-logo">VISHWA ARCHITECTS</span>
+  </a>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
-    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#portfolio">Projects</a></li>
     <li><a href="#services">Services</a></li>
     <li><a href="#testimonials">Clients</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -1127,7 +993,6 @@ footer {
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
   <div class="hero-img-wrap">
-    <!-- Uses an actual <img> tag now with a beautiful Unsplash fallback for preview environments -->
     <img src="p1.jpg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1400&q=80';" class="hero-img-inner" id="heroParallax" alt="Hero Architecture" />
   </div>
   <div class="hero-content">
@@ -1139,7 +1004,7 @@ footer {
     </h1>
     <p class="hero-desc">We craft architecture of enduring beauty — blending contemporary Indian aesthetics with purposeful design to create spaces that resonate with your lifestyle.</p>
     <div class="hero-actions">
-      <a href="#portfolio" class="btn-primary">
+      <a href="#services" class="btn-primary">
         View Our Work
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
           <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1163,158 +1028,25 @@ footer {
   </div>
 </div>
 
-<!-- ABOUT -->
+<!-- PRINCIPAL ARCHITECT -->
 <section id="about">
   <div class="about-media reveal">
     <div class="about-img-main"></div>
-    <div class="about-img-accent"></div>
-    <div class="about-stat-tag">
-      <div class="num">12</div>
-      <div class="lbl">Years of Excellence</div>
-    </div>
   </div>
   <div class="about-text">
-    <p class="section-label reveal">About Us</p>
+    <p class="section-label reveal">Principal Architect</p>
     <h2 class="section-title reveal reveal-delay-1">
-      Architecture as a<br/><em>conversation</em> with culture.
+      Ar. Mayank<br/><em>Sharma</em>
     </h2>
     <p class="about-lead reveal reveal-delay-2">
-      We believe every structure has a responsibility — to its landscape, its community, and the generations that will inhabit it long after completion.
+      Architecture should be both visionary and deeply human, serving as a quiet, beautifully crafted backdrop to the lives lived within it.
     </p>
     <p class="about-body reveal reveal-delay-3">
-      Vishwa Architects is a design practice founded on the conviction that architecture should be both visionary and deeply human. From private residences to commercial hubs, each project is an exploration of material, light, and context.
+      We believe every structure has a responsibility — to its landscape, its community, and the generations that will inhabit it long after completion. The best architecture emerges from deep collaboration between client, architect, and the inherent spirit of a place.
     </p>
     <p class="about-body reveal reveal-delay-3">
-      Our team of architects, interior designers, and spatial thinkers collaborates closely with clients to translate their aspirations into spaces of lasting impact.
+      From private residences to commercial hubs, each project is an exploration of material, light, and context, designed without excess to achieve a pure, resonant balance that withstands the test of time.
     </p>
-    <div class="about-values reveal reveal-delay-4">
-      <div class="value-item">
-        <p class="v-title">Precision</p>
-        <p>Every detail is considered. Nothing is arbitrary. The smallest element reflects the whole.</p>
-      </div>
-      <div class="value-item">
-        <p class="v-title">Context</p>
-        <p>We listen to sites — their history, climate, and soul — before we draw a single line.</p>
-      </div>
-      <div class="value-item">
-        <p class="v-title">Longevity</p>
-        <p>We design for decades, not trends. Materials and forms chosen to endure and improve with age.</p>
-      </div>
-      <div class="value-item">
-        <p class="v-title">Dialogue</p>
-        <p>The best architecture emerges from deep collaboration between client, architect, and place.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- STATS BAR -->
-<div class="stats-bar">
-  <div class="stat-item reveal">
-    <div class="stat-num"><span class="count-up" data-target="150">0</span><span class="stat-suffix">+</span></div>
-    <div class="stat-label">Projects Delivered</div>
-  </div>
-  <div class="stat-item reveal reveal-delay-1">
-    <div class="stat-num"><span class="count-up" data-target="12">0</span></div>
-    <div class="stat-label">National Awards</div>
-  </div>
-  <div class="stat-item reveal reveal-delay-2">
-    <div class="stat-num"><span class="count-up" data-target="15">0</span><span class="stat-suffix">+</span></div>
-    <div class="stat-label">Cities Built In</div>
-  </div>
-  <div class="stat-item reveal reveal-delay-3">
-    <div class="stat-num"><span class="count-up" data-target="99">0</span><span class="stat-suffix">%</span></div>
-    <div class="stat-label">Client Satisfaction</div>
-  </div>
-</div>
-
-<!-- PORTFOLIO -->
-<section id="portfolio">
-  <div class="portfolio-header">
-    <div>
-      <p class="section-label reveal">Selected Works</p>
-      <h2 class="section-title reveal reveal-delay-1">Our <em>portfolio</em></h2>
-    </div>
-    <ul class="portfolio-filter reveal reveal-delay-2">
-      <li class="active">All</li>
-      <li>Residential</li>
-      <li>Commercial</li>
-      <li>Interiors</li>
-    </ul>
-  </div>
-  <div class="portfolio-grid">
-    <!-- PROJECT 1: Using p1.jpg with fallback -->
-    <div class="proj reveal">
-      <img src="p1.jpg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=900&q=80';" class="proj-img" alt="Shanti Kunj Elevation" />
-      <div class="proj-overlay">
-        <div class="proj-cat">Residential · Exterior</div>
-        <div class="proj-name">Shanti Kunj Elevation</div>
-        <div class="proj-location">Pune, Maharashtra</div>
-      </div>
-      <div class="proj-arrow">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 11L11 3M11 3H5M11 3v6" stroke="white" stroke-width="1.4" stroke-linecap="round"/></svg>
-      </div>
-    </div>
-    <!-- PROJECT 2: Using p3.jpg with fallback -->
-    <div class="proj reveal reveal-delay-1">
-      <img src="p3.jpg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1497366216548-37526070297c?w=900&q=80';" class="proj-img" alt="Executive Workspace" />
-      <div class="proj-overlay">
-        <div class="proj-cat">Commercial · Interior</div>
-        <div class="proj-name">Executive Workspace</div>
-        <div class="proj-location">Mumbai, Maharashtra</div>
-      </div>
-      <div class="proj-arrow">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 11L11 3M11 3H5M11 3v6" stroke="white" stroke-width="1.4" stroke-linecap="round"/></svg>
-      </div>
-    </div>
-    <!-- PROJECT 3: Using p4.jpg with fallback -->
-    <div class="proj reveal reveal-delay-2">
-      <img src="p4.jpg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1556157382-97eda2d62296?w=900&q=80';" class="proj-img" alt="Retail Pharmacy" />
-      <div class="proj-overlay">
-        <div class="proj-cat">Commercial · Retail</div>
-        <div class="proj-name">Retail Pharmacy</div>
-        <div class="proj-location">Bengaluru, Karnataka</div>
-      </div>
-      <div class="proj-arrow">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 11L11 3M11 3H5M11 3v6" stroke="white" stroke-width="1.4" stroke-linecap="round"/></svg>
-      </div>
-    </div>
-    <!-- PROJECT 4: Using p5.jpg with fallback -->
-    <div class="proj reveal">
-      <img src="p5.jpg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=900&q=80';" class="proj-img" alt="Contemporary Kitchen" />
-      <div class="proj-overlay">
-        <div class="proj-cat">Residential · Interior</div>
-        <div class="proj-name">Contemporary Kitchen</div>
-        <div class="proj-location">Hyderabad, Telangana</div>
-      </div>
-      <div class="proj-arrow">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 11L11 3M11 3H5M11 3v6" stroke="white" stroke-width="1.4" stroke-linecap="round"/></svg>
-      </div>
-    </div>
-    <!-- PROJECT 5: Using p6.jpg with fallback -->
-    <div class="proj reveal reveal-delay-1">
-      <img src="p6.jpg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=900&q=80';" class="proj-img" alt="Master Bedroom Suite" />
-      <div class="proj-overlay">
-        <div class="proj-cat">Residential · Interior</div>
-        <div class="proj-name">Master Bedroom Suite</div>
-        <div class="proj-location">Ahmedabad, Gujarat</div>
-      </div>
-      <div class="proj-arrow">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 11L11 3M11 3H5M11 3v6" stroke="white" stroke-width="1.4" stroke-linecap="round"/></svg>
-      </div>
-    </div>
-    <!-- PROJECT 6: Using p7.jpg with fallback -->
-    <div class="proj reveal reveal-delay-2">
-      <img src="p7.jpg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=900&q=80';" class="proj-img" alt="Shanti Kunj Twilight" />
-      <div class="proj-overlay">
-        <div class="proj-cat">Residential · Exterior</div>
-        <div class="proj-name">Shanti Kunj Twilight</div>
-        <div class="proj-location">Pune, Maharashtra</div>
-      </div>
-      <div class="proj-arrow">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 11L11 3M11 3H5M11 3v6" stroke="white" stroke-width="1.4" stroke-linecap="round"/></svg>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -1407,6 +1139,26 @@ footer {
     </div>
   </div>
 </section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-item reveal">
+    <div class="stat-num"><span class="count-up" data-target="150">0</span><span class="stat-suffix">+</span></div>
+    <div class="stat-label">Projects Delivered</div>
+  </div>
+  <div class="stat-item reveal reveal-delay-1">
+    <div class="stat-num"><span class="count-up" data-target="12">0</span></div>
+    <div class="stat-label">National Awards</div>
+  </div>
+  <div class="stat-item reveal reveal-delay-2">
+    <div class="stat-num"><span class="count-up" data-target="15">0</span><span class="stat-suffix">+</span></div>
+    <div class="stat-label">Cities Built In</div>
+  </div>
+  <div class="stat-item reveal reveal-delay-3">
+    <div class="stat-num"><span class="count-up" data-target="99">0</span><span class="stat-suffix">%</span></div>
+    <div class="stat-label">Client Satisfaction</div>
+  </div>
+</div>
 
 <!-- PROCESS -->
 <section id="process">
@@ -1569,7 +1321,7 @@ footer {
     <div class="footer-col">
       <h4>Work</h4>
       <ul>
-        <li><a href="#portfolio">Portfolio</a></li>
+        <li><a href="#portfolio">Projects</a></li>
         <li><a href="#services">Services</a></li>
         <li><a href="#">Awards</a></li>
         <li><a href="#">Publications</a></li>
@@ -1673,14 +1425,6 @@ const countObs = new IntersectionObserver(entries => {
   });
 }, { threshold: .5 });
 countEls.forEach(el => countObs.observe(el));
-
-/* ── PORTFOLIO FILTER ───────────────────────── */
-document.querySelectorAll('.portfolio-filter li').forEach(li => {
-  li.addEventListener('click', function() {
-    document.querySelectorAll('.portfolio-filter li').forEach(l => l.classList.remove('active'));
-    this.classList.add('active');
-  });
-});
 
 /* ── MOBILE NAV ─────────────────────────────── */
 const mobileNav = document.getElementById('mobileNav');
